@@ -18,7 +18,7 @@ import { Rb_Button, Rb_Image, Rb_Input } from "rentbook";
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const { isAuthenticated, userInfo } = useSelector((state: any) => state.auth);
 
   const [isOpen, setIsOpen] = useState(false);
