@@ -15,7 +15,7 @@ function HomePage() {
             );
             return;
         }
-
+ // eslint-disable-next-line  @typescript-eslint/no-explicit-any
         const handleWidgetLoading = (event: any) => {
             if (event.detail !== undefined) {
                 setIsLoading(event.detail);
@@ -37,9 +37,7 @@ function HomePage() {
 
     return (
         <>
-            {isLoading && <Loading></Loading>}
-
-            <div id={WIDGET_CONTAINER_ID}></div>
+            {isLoading ? <Loading></Loading> : <div id={WIDGET_CONTAINER_ID}></div>}
         </>
     );
 }

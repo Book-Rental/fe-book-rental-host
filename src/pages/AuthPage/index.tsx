@@ -7,26 +7,16 @@ import { loginSuccess } from "../../store/services/Slices/authSlice";
 const AUTH_WIDGET_URL = import.meta.env.VITE_AUTH_WIDGET_URL;
 
 const AuthPage = () => {
-    //   const [isLoading, setIsLoading] = useState(true);
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // const handleWidgetLoading = (event: any) => {
-        //   if (event.detail !== undefined) {
-        //     setIsLoading(event.detail);
-        //   }
-        // };
-
-        // window.addEventListener("widget-loading-status", handleWidgetLoading);
-
         loadWidget(AUTH_WIDGET_URL, "auth-widget");
 
         const handleLoginSuccess = (event: Event) => {
             const customEvent = event as CustomEvent;
-
             const { token, userInfo } = customEvent.detail;
+
             dispatch(
                 loginSuccess({
                     token,
@@ -40,16 +30,15 @@ const AuthPage = () => {
 
         return () => {
             window.removeEventListener("login-widget-success", handleLoginSuccess);
-
             removeWidget("auth-widget");
         };
-    }, []);
+    }, [dispatch, navigate]); // Added the missing dependencies here
 
-    return <>
-        {/* {isLoading && <Loading></Loading>} */}
-
-        <div id='auth-widget'></div>
-    </>
+    return (
+        <>
+            <div id='auth-widget'></div>
+        </>
+    );
 };
 
 export default AuthPage;
