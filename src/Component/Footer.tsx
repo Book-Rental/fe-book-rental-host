@@ -122,7 +122,7 @@ function Footer() {
               </div>
 
               {/* Social Icons */}
-              <div className="mt-6 flex gap-4 h-12">
+              <div className="mt-6 flex gap-1 h-12">
                 <Rb_Button className="!rounded-full !bg-gray-900   transition hover:!bg-gray-800">
                   <Rb_Icon icon={IoLogoFacebook} size={18} />
                 </Rb_Button>

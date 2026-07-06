@@ -6,40 +6,45 @@ const HOME_WIDGET_URL = import.meta.env.VITE_HOMEPAGE_WIDGET;
 const WIDGET_CONTAINER_ID = "home-widget";
 
 function HomePage() {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        if (!HOME_WIDGET_URL) {
-            console.error(
-                "Widget URL is undefined. Check your environment variables.",
-            );
-            return;
-        }
- // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-        const handleWidgetLoading = (event: any) => {
-            if (event.detail !== undefined) {
-                setIsLoading(event.detail);
-            }
-        };
+  useEffect(() => {
+    if (!HOME_WIDGET_URL) {
+      console.error(
+        "Widget URL is undefined. Check your environment variables.",
+      );
+      return;
+    }
 
-        window.addEventListener("widget-loading-status", handleWidgetLoading);
+    const handleWidgetLoading = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      if (customEvent.detail !== undefined) {
+        setIsLoading(customEvent.detail);
+      }
+    };
 
-        loadWidget(HOME_WIDGET_URL, WIDGET_CONTAINER_ID, {
-            name: "Home_Widget",
-        });
+    window.addEventListener("widget-loading-status", handleWidgetLoading);
 
-        return () => {
-            removeWidget(WIDGET_CONTAINER_ID);
-            // Clean up the event listener to avoid memory leaks
-            window.removeEventListener("widget-loading-status", handleWidgetLoading);
-        };
-    }, []);
+    loadWidget(HOME_WIDGET_URL, WIDGET_CONTAINER_ID, {
+      name: "Home_Widget",
+    });
 
-    return (
-        <>
-            {isLoading ? <Loading></Loading> : <div id={WIDGET_CONTAINER_ID}></div>}
-        </>
-    );
+    return () => {
+      removeWidget(WIDGET_CONTAINER_ID);
+      window.removeEventListener("widget-loading-status", handleWidgetLoading);
+    };
+  }, []);
+
+  return (
+    <div className="relative w-full min-h-[400px]">
+      {isLoading && <Loading />}
+
+      <div
+        id={WIDGET_CONTAINER_ID}
+        className={isLoading ? "invisible h-0 overflow-hidden" : "w-full block"}
+      ></div>
+    </div>
+  );
 }
 
 export default HomePage;

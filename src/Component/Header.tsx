@@ -94,7 +94,7 @@ export default function Header() {
           <Search size={18} className="shrink-0 text-gray-400" />
 
           <Rb_Input
-            className="w-full border-none bg-transparent text-sm h-1 text-gray-700 outline-none placeholder:text-gray-400"
+            className="w-full border-none bg-transparent text-sm h-0.5 text-gray-700 outline-none placeholder:text-gray-400"
             placeholder="Search books..."
           />
         </div>
