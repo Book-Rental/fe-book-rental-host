@@ -1,9 +1,4 @@
-declare global {
-  interface Window {
-    renderReactWidget?: (config: string) => void;
-    unmountReactWidget?: (id: string) => void;
-  }
-}
+
 
 export const loadWidget = (
   url: string,

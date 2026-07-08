@@ -24,12 +24,29 @@ const AuthPage = () => {
 
     const handleLoginSuccess = (event: Event) => {
       const customEvent = event as CustomEvent;
-      const { token, userInfo } = customEvent.detail;
-
+      const { userInfo } = customEvent.detail;
+      const {
+        _id,
+        firstName,
+        lastName,
+        email,
+        userType,
+        isVerified,
+        status,
+        addresses,
+      } = userInfo;
       dispatch(
         loginSuccess({
-          token,
-          userInfo,
+          userInfo: {
+            _id,
+            firstName,
+            lastName,
+            email,
+            userType,
+            isVerified,
+            status,
+            addresses,
+          },
         }),
       );
       navigate("/");

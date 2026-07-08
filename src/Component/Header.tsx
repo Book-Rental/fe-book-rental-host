@@ -9,6 +9,7 @@ import {
   Settings,
   LogOut,
   ChevronDown,
+  HeartIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,13 +19,19 @@ import { Rb_Button, Rb_Image, Rb_Input } from "rentbook";
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const { isAuthenticated, userInfo } = useSelector((state: any) => state.auth);
 
   const [isOpen, setIsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
   const profileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const close = () => setIsOpen(false);
+    window.addEventListener("close-header-menu", close);
+    return () => window.removeEventListener("close-header-menu", close);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -49,7 +56,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white">
-      <div className="mx-auto flex max-w-[95%] items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="mx-10 flex items-center justify-between gap-4 px-4 py-3 sm:px-6 ">
         {/* Logo */}
         <div
           className="flex shrink-0 cursor-pointer items-center gap-3"
@@ -61,7 +68,7 @@ export default function Header() {
           <Rb_Image
             src="/logo.png"
             alt="Logo"
-            className="h-12 w-auto object-contain sm:h-14"
+            className="h-14 w-auto object-contain sm:h-14"
           />
         </div>
 
@@ -184,7 +191,19 @@ export default function Header() {
                       />
                       Cart
                     </button>
-
+                    <button
+                      onClick={() => {
+                        navigate("/wishList");
+                        setProfileOpen(false);
+                      }}
+                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
+                    >
+                      <HeartIcon
+                        size={15}
+                        className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                      />
+                      WishList
+                    </button>
                     <button
                       onClick={() => {
                         navigate("/my-books");
@@ -235,7 +254,13 @@ export default function Header() {
 
         <button
           className="rounded-lg p-1.5 text-gray-700 transition-colors hover:bg-gray-100 lg:hidden"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => {
+            const next = !isOpen;
+            setIsOpen(next);
+            if (next) {
+              window.dispatchEvent(new Event("close-filter-drawer"));
+            }
+          }}
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={26} /> : <Menu size={26} />}
