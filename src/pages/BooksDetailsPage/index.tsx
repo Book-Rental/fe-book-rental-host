@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { loadWidget, removeWidget } from "../../utils/widgetLoader";
 import Loading from "../../Component/Loading";
 
-const PDP_WIDGET_URL = import.meta.env.VITE_HOMEPAGE_WIDGET;
+const PDP_WIDGET_URL = import.meta.env.VITE_PDP_WIDGET;
 const WIDGET_CONTAINER_ID = "pdp-widget";
 
 function BooksDetailsPage() {
