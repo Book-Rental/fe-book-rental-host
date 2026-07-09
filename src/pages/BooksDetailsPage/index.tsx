@@ -28,7 +28,10 @@ function BooksDetailsPage() {
         loadWidget(PDP_WIDGET_URL, WIDGET_CONTAINER_ID, {
             name: "Home_Widget",
         });
-
+        window.scrollTo({
+            top: 0,
+            behavior: "instant", // Use "smooth" if you want an animated scroll transition
+        });
         return () => {
             removeWidget(WIDGET_CONTAINER_ID);
             window.removeEventListener("widget-loading-status", handleWidgetLoading);

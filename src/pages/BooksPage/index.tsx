@@ -24,7 +24,10 @@ function BooksPage() {
     loadWidget(CATEGORY_WIDGET, WIDGET_CONTAINER_ID, {
       name: "Category-widget",
     });
-
+     window.scrollTo({
+            top: 0,
+            behavior: "instant", // Use "smooth" if you want an animated scroll transition
+        });
     return () => {
       removeWidget(WIDGET_CONTAINER_ID);
       window.removeEventListener("widget-loading-status", handleWidgetLoading);
