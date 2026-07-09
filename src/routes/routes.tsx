@@ -23,8 +23,8 @@ export const AppRoutes = () => {
                     }
                 >
                     <Route index element={<HomePage />}></Route>
-                    <Route path="/books" element={<BooksPage />}></Route>
-                    <Route path="/books/:id" element={<BooksDetailsPage/>}></Route>
+                    <Route path="/books" element={<BooksPage />}></Route>   
+                    <Route path="/books-details" element={<BooksDetailsPage />} />
                     <Route path="/wishlist" element={<WishListPage />}></Route>
                     <Route path="/test" element={<TestPage />}></Route>
                 </Route>
