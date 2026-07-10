@@ -1,34 +1,42 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import MainModule from "../modules/mainModule";
 
-import AuthPage from "../pages/AuthPage";
-import HomePage from "../pages/HomePage";
-import BooksPage from "../pages/BooksPage";
-import TestPage from "../pages/TestPage";
-import WishListPage from "../pages/WishListPage";
-import BooksDetailsPage from "../pages/BooksDetailsPage";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { ScrollToTop } from "../Component/ScrollToTop";
+import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
+
+// 1. Convert static page imports into dynamic lazy imports
+const AuthPage = lazy(() => import("../pages/AuthPage"));
+const HomePage = lazy(() => import("../pages/HomePage"));
+const BooksPage = lazy(() => import("../pages/BooksPage"));
+const TestPage = lazy(() => import("../pages/TestPage"));
+const WishListPage = lazy(() => import("../pages/WishListPage"));
+const BooksDetailsPage = lazy(() => import("../pages/BooksDetailsPage"));
 
 export const AppRoutes = () => {
     return (
         <>
-            <Routes>
-                <Route path="/auth" element={<AuthPage></AuthPage>}></Route>
-                <Route
-                    path="/"
-                    element={
-                        <Suspense fallback={<>loading .....</>}>
-                            <MainModule />
-                        </Suspense>
-                    }
-                >
-                    <Route index element={<HomePage />}></Route>
-                    <Route path="/books" element={<BooksPage />}></Route>   
-                    <Route path="/books-details" element={<BooksDetailsPage />} />
-                    <Route path="/wishlist" element={<WishListPage />}></Route>
-                    <Route path="/test" element={<TestPage />}></Route>
-                </Route>
-            </Routes>
+            <ScrollToTop />
+
+            <Suspense fallback={<Rb_LoadingSpinner />}>
+                <Routes>
+                    {/* Public Auth Endpoint */}
+                    <Route path="/auth" element={<AuthPage />} />
+
+                    {/* Main Application Base */}
+                    <Route path="/" element={<MainModule />}>
+                        <Route index element={<HomePage />} />
+                        <Route path="/books" element={<BooksPage />} />
+                        <Route path="/test" element={<TestPage />} />
+                        <Route path="/books-details" element={<BooksDetailsPage />} />
+
+                        <Route element={<ProtectedRoute />}>
+                            <Route path="/wishlist" element={<WishListPage />} />
+                        </Route>
+                    </Route>
+                </Routes>
+            </Suspense>
         </>
     );
 };

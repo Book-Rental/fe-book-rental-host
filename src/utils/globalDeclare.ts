@@ -6,5 +6,6 @@ declare global {
         unmountReactWidget?: (id: string) => void;
 
         HOST_USER_INFO: UserInfo | null;
+        HOST_WISHLISTS: Record<string, string[]>;
     }
 }
