@@ -14,12 +14,12 @@ interface WishlistResponse {
     message: string;
     data: Wishlist[];
 }
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const fetchAllWishlists = async (
     userId: string,
 ): Promise<Wishlist[]> => {
     const response = await fetch(
-        `http://localhost:3000/api/wishList/getAllWishList/${userId}`,
+        `${backendUrl}/api/wishList/getAllWishList/${userId}`,
     );
 
     if (!response.ok) {
