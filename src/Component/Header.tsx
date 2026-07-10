@@ -14,7 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/services/Slices/authSlice";
-import { Rb_Button, Rb_Image, Rb_Input } from "rentbook";
+import { Rb_Button, Rb_Image, Rb_Input } from "@rentbook/rentbook-ui-lib";
 
 export default function Header() {
   const navigate = useNavigate();
