@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { loadWidget, removeWidget } from "../../utils/widgetLoader";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/services/Slices/authSlice";
-import Loading from "../../Component/Loading";
+
+import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 
 const AUTH_WIDGET_URL = import.meta.env.VITE_AUTH_WIDGET_URL;
 
@@ -63,7 +64,11 @@ const AuthPage = () => {
   return (
     <>
       <div className="relative w-full min-h-[400px]">
-        {isLoading && <Loading />}
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50 z-50">
+            <Rb_LoadingSpinner />
+          </div>
+        )}
 
         <div
           id="auth-widget"

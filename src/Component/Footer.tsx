@@ -8,7 +8,7 @@ import { BiLogoInstagramAlt } from "react-icons/bi";
 import { FaXTwitter } from "react-icons/fa6";
 import { ImLinkedin } from "react-icons/im";
 import { IoLogoFacebook } from "react-icons/io";
-import { Rb_Button, Rb_Icon, Rb_Image } from "rentbook";
+import { Rb_Button, Rb_Icon, Rb_Image } from "@rentbook/rentbook-ui-lib";
 
 function Footer() {
   return (

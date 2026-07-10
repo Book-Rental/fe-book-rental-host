@@ -14,7 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/services/Slices/authSlice";
-import { Rb_Button, Rb_Image, Rb_Input } from "rentbook";
+import { Rb_Button, Rb_Image, Rb_Input } from "@rentbook/rentbook-ui-lib";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -121,11 +121,10 @@ export default function Header() {
               <div
                 onClick={() => setProfileOpen(!profileOpen)}
                 className={`flex items-center gap-3 rounded-full border p-1 pr-4 transition-all duration-200 outline-none
-          ${
-            profileOpen
-              ? "border-blue-500 bg-blue-50/40 ring-2 ring-blue-500/10"
-              : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/80 active:bg-gray-100"
-          }`}
+          ${profileOpen
+                    ? "border-blue-500 bg-blue-50/40 ring-2 ring-blue-500/10"
+                    : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/80 active:bg-gray-100"
+                  }`}
               >
                 {/* Modern Avatar Ring */}
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-sm font-bold text-white shadow-sm shadow-blue-500/10 ring-2 ring-white">
@@ -269,9 +268,8 @@ export default function Header() {
 
       {/* Mobile menu */}
       <div
-        className={`overflow-hidden border-t border-gray-100 bg-white transition-all duration-300 ease-in-out lg:hidden ${
-          isOpen ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`overflow-hidden border-t border-gray-100 bg-white transition-all duration-300 ease-in-out lg:hidden ${isOpen ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div className="space-y-2 px-4 py-2 sm:px-6">
           <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2.5">
@@ -322,7 +320,12 @@ export default function Header() {
                   <p className="text-xs text-gray-500">{userInfo?.email}</p>
                 </div>
               </div>
-
+              <button
+                onClick={() => navigate("/wishlist")}
+                className="flex w-full items-center gap-2 rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+              >
+                Wishlist
+              </button>
               <button
                 onClick={() => navigate("/profile")}
                 className="flex w-full items-center gap-2 rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"

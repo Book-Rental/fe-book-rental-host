@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadWidget, removeWidget } from "../../utils/widgetLoader";
-import Loading from "../../Component/Loading";
+
+import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 
 const PDP_WIDGET_URL = import.meta.env.VITE_PDP_WIDGET;
 const WIDGET_CONTAINER_ID = "pdp-widget";
@@ -28,10 +29,6 @@ function BooksDetailsPage() {
         loadWidget(PDP_WIDGET_URL, WIDGET_CONTAINER_ID, {
             name: "Home_Widget",
         });
-        window.scrollTo({
-            top: 0,
-            behavior: "instant", // Use "smooth" if you want an animated scroll transition
-        });
         return () => {
             removeWidget(WIDGET_CONTAINER_ID);
             window.removeEventListener("widget-loading-status", handleWidgetLoading);
@@ -40,8 +37,11 @@ function BooksDetailsPage() {
     return (
         <>
             <div className="relative w-full min-h-[400px]">
-                {isLoading && <Loading />}
-
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50 z-50">
+                        <Rb_LoadingSpinner />
+                    </div>
+                )}
                 <div
                     id={WIDGET_CONTAINER_ID}
                     className={
