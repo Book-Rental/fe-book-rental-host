@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Footer from "../../Component/Footer";
-import Header from "../../Component/Header";
-import { useWishlist } from "../../hooks/useWishlist";
 import { useDispatch, useSelector } from "react-redux";
+
+import Header from "../../Component/Header";
+import Footer from "../../Component/Footer";
+import { useWishlist } from "../../hooks/useWishlist";
 import { setWishlists } from "../../store/services/Slices/wishlistSlice";
 import { RootState } from "../../store/store";
 
@@ -11,7 +12,7 @@ function MainModule() {
   const dispatch = useDispatch();
 
   const userId = useSelector(
-    (state: RootState) => state.auth.userInfo?._id,
+    (state: RootState) => state.auth.userInfo?._id
   );
 
   const {
@@ -20,7 +21,7 @@ function MainModule() {
     refetch,
   } = useWishlist(userId ?? "");
 
-  // Update Redux whenever wishlist changes
+  // Update Redux + Global Window
   useEffect(() => {
     if (!isSuccess) return;
 
@@ -28,33 +29,43 @@ function MainModule() {
 
     lists.forEach((wishlist) => {
       wishlistMap[wishlist.wishlistId] = wishlist.books.map(
-        (book) => book.bookId,
+        (book) => book.bookId
       );
     });
 
     dispatch(setWishlists(wishlistMap));
+
+    // Update global object
+    window.HOST_WISHLISTS = wishlistMap;
+
+    // Notify widgets
+    window.dispatchEvent(
+      new CustomEvent("wishlist-state-changed", {
+        detail: wishlistMap,
+      })
+    );
   }, [lists, isSuccess, dispatch]);
 
-  // Listen for refresh event
+  // Refetch when requested
   useEffect(() => {
-    const handleWishlistRefresh = () => {
-      if (userId) {
-        refetch();
-      }
+    const handleWishlistRefresh = async () => {
+      if (!userId) return;
+
+      await refetch();
     };
 
     window.addEventListener(
       "wishlist-refresh",
-      handleWishlistRefresh,
+      handleWishlistRefresh
     );
 
     return () => {
       window.removeEventListener(
         "wishlist-refresh",
-        handleWishlistRefresh,
+        handleWishlistRefresh
       );
     };
-  }, [refetch, userId]);
+  }, [userId, refetch]);
 
   return (
     <div className="min-h-screen flex flex-col">

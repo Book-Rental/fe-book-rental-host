@@ -82,7 +82,7 @@ export default function Header() {
               Books
             </li>
 
-            <li className="cursor-pointer transition-colors hover:text-[#146adb]">
+            <li className="cursor-pointer transition-colors hover:text-[#146adb]" onClick={() => navigate('/Categories')}>
               Categories
             </li>
 
@@ -288,7 +288,7 @@ export default function Header() {
             Books
           </button>
 
-          <button className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50">
+          <button className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50" onClick={() => navigate('/Categories')}>
             Categories
           </button>
 
