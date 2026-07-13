@@ -22,7 +22,7 @@ function App() {
       if (!customEvent.detail) return;
 
       const { message, type } = customEvent.detail;
-      console.log('dhdhg', message, type)
+      
       // 2. Map dynamic variant invocations to react-hot-toast actions safely
       if (type === "success") {
         toast.success(message);
@@ -46,7 +46,6 @@ function App() {
       <QueryClientProvider client={queryClient} >
         <BrowserRouter>
           <AppRoutes />
-          {/* 3. Global react-hot-toast container initialization */}
           <Toaster position="bottom-center" reverseOrder={false} />
         </BrowserRouter>
 
