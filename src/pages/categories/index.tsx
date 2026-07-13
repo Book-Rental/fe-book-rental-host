@@ -4,14 +4,14 @@ import { loadWidget, removeWidget } from "../../utils/widgetLoader";
 import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 
 
-const WISHLIST_WIDGET = import.meta.env.VITE_WISHLIST_WIDGET;
-const WIDGET_CONTAINER_ID = "WishList-widget";
+const CATEGORY_WIDGET = import.meta.env.VITE_COMMON_WIDGET;
+const WIDGET_CONTAINER_ID = "Categories-widget";
 
-function WishListPage() {
+function CategoriesPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (!WISHLIST_WIDGET) {
+        if (!CATEGORY_WIDGET) {
             console.error(
                 "Widget URL is undefined. Check your environment variables.",
             );
@@ -24,7 +24,7 @@ function WishListPage() {
             }
         };
         window.addEventListener("widget-loading-status", handleWidgetLoading);
-        loadWidget(WISHLIST_WIDGET, WIDGET_CONTAINER_ID, {
+        loadWidget(CATEGORY_WIDGET, WIDGET_CONTAINER_ID, {
             name: "Category-widget",
         });
         return () => {
@@ -53,4 +53,4 @@ function WishListPage() {
     );
 }
 
-export default WishListPage;
+export default CategoriesPage;

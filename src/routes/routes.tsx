@@ -5,6 +5,7 @@ import MainModule from "../modules/mainModule";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ScrollToTop } from "../Component/ScrollToTop";
 import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
+import CategoriesPage from "../pages/categories";
 
 // 1. Convert static page imports into dynamic lazy imports
 const AuthPage = lazy(() => import("../pages/AuthPage"));
@@ -29,6 +30,8 @@ export const AppRoutes = () => {
                         <Route index element={<HomePage />} />
                         <Route path="/books" element={<BooksPage />} />
                         <Route path="/test" element={<TestPage />} />
+                        <Route path="/categories" element={<CategoriesPage />} />
+
                         <Route path="/books-details" element={<BooksDetailsPage />} />
 
                         <Route element={<ProtectedRoute />}>
