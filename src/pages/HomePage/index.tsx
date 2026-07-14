@@ -38,7 +38,7 @@ function HomePage() {
   return (
     <div className="relative w-full min-h-[400px]">
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50 z-50">
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50 ">
           <Rb_LoadingSpinner />
         </div>
       )}
