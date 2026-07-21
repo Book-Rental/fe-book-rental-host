@@ -24,9 +24,13 @@ function ProfilePage() {
             }
         };
         window.addEventListener("widget-loading-status", handleWidgetLoading);
-        loadWidget(PROFILE_WIDGET, WIDGET_CONTAINER_ID, {
-            name: "Category-widget",
-        });
+   
+        const widgetParams = {
+            name: "Profile-widget",
+            // view: "address"
+        };
+
+        loadWidget(PROFILE_WIDGET, WIDGET_CONTAINER_ID, widgetParams);
         return () => {
             removeWidget(WIDGET_CONTAINER_ID);
             window.removeEventListener("widget-loading-status", handleWidgetLoading);

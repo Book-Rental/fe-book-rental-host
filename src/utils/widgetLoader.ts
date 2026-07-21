@@ -4,6 +4,7 @@ export const loadWidget = (
   url: string,
   containerId: string,
   data?: Record<string, string>,
+  params?: Record<string, any>
 ) => {
   const container = document.getElementById(containerId);
 
@@ -26,6 +27,7 @@ export const loadWidget = (
     window.renderReactWidget?.(
       JSON.stringify({
         containerElementId: containerId,
+        ...params
       }),
     );
   };
