@@ -4,6 +4,7 @@ export const loadWidget = (
   url: string,
   containerId: string,
   data?: Record<string, string>,
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   params?: Record<string, any>
 ) => {
   const container = document.getElementById(containerId);
