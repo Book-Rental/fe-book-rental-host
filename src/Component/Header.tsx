@@ -11,7 +11,7 @@ import {
   ChevronDown,
   HeartIcon,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/services/Slices/authSlice";
 import { Rb_Button, Rb_Image, Rb_Input } from "@rentbook/rentbook-ui-lib";
@@ -21,10 +21,10 @@ export default function Header() {
   const dispatch = useDispatch();
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const { isAuthenticated, userInfo } = useSelector((state: any) => state.auth);
-
+  const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-
+  const location = useLocation();
   const profileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,6 +47,27 @@ export default function Header() {
 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (location.pathname === "/books") {
+      const params = new URLSearchParams(location.search);
+      setSearch(params.get("search") || "");
+    } else {
+      setSearch("");
+    }
+  }, [location]);
+
+  const handleSearch = () => {
+    if (!search.trim()) return;
+
+    window.history.pushState(
+      {},
+      "",
+      `/books?search=${encodeURIComponent(search.trim())}`
+    );
+
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -76,7 +97,10 @@ export default function Header() {
         <nav className="hidden lg:!block">
           <ul className="flex items-center gap-8 text-sm font-medium text-gray-700">
             <li
-              onClick={() => navigate("/books")}
+              onClick={() => {
+                window.history.pushState({}, "", "/books");
+                window.dispatchEvent(new PopStateEvent("popstate"));
+              }}
               className="cursor-pointer transition-colors hover:text-[#146adb]"
             >
               Books
@@ -97,13 +121,36 @@ export default function Header() {
         </nav>
 
         {/* Desktop search */}
-        <div className="hidden flex-1 items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 transition-colors focus-within:border-[#146adb] focus-within:bg-white lg:!flex lg:max-w-xs xl:max-w-sm">
-          <Search size={18} className="shrink-0 text-gray-400" />
 
+
+        <div className="hidden flex-1 items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 transition-colors focus-within:border-[#146adb] focus-within:bg-white lg:!flex lg:max-w-xs xl:max-w-sm">
           <Rb_Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
             className="w-full border-none bg-transparent text-sm h-0.5 text-gray-700 outline-none placeholder:text-gray-400"
             placeholder="Search books..."
           />
+
+          {search ? (
+            <X
+              size={18}
+              className="shrink-0 cursor-pointer text-gray-400 hover:text-gray-600"
+              onClick={() => {
+                setSearch("");
+              }}
+            />
+          ) : (
+            <Search
+              size={18}
+              className="shrink-0 cursor-pointer text-gray-400 hover:text-[#146adb]"
+              onClick={handleSearch}
+            />
+          )}
         </div>
 
         <div className="hidden lg:!flex items-center gap-4">
@@ -273,12 +320,35 @@ export default function Header() {
       >
         <div className="space-y-2 px-4 py-2 sm:px-6">
           <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2.5">
-            <Search size={18} className="shrink-0 text-gray-400" />
-
             <Rb_Input
-              className="w-full border-none bg-transparent text-sm outline-none h-1 placeholder:text-gray-400"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                  setIsOpen(false);
+                }
+              }}
+              className="w-full border-none !bg-transparent text-sm outline-none h-1 placeholder:text-gray-400"
               placeholder="Search books..."
             />
+
+            {search ? (
+              <X
+                size={18}
+                className="shrink-0 cursor-pointer text-gray-400 hover:text-gray-600"
+                onClick={() => setSearch("")}
+              />
+            ) : (
+              <Search
+                size={18}
+                className="shrink-0 cursor-pointer text-gray-400 hover:text-[#146adb]"
+                onClick={() => {
+                  handleSearch();
+                  setIsOpen(false);
+                }}
+              />
+            )}
           </div>
 
           <button
