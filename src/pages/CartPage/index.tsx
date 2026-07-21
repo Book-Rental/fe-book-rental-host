@@ -24,10 +24,10 @@ function CartPage() {
     };
 
     window.addEventListener("widget-loading-status", handleWidgetLoading);
-
-    loadWidget(CART_WIDGET_URL, WIDGET_CONTAINER_ID, {
-      name: "Home_Widget",
-    });
+    const widgetParams = {
+      name: WIDGET_CONTAINER_ID
+    };
+    loadWidget(CART_WIDGET_URL, WIDGET_CONTAINER_ID, widgetParams);
     return () => {
       removeWidget(WIDGET_CONTAINER_ID);
       window.removeEventListener("widget-loading-status", handleWidgetLoading);
@@ -38,7 +38,7 @@ function CartPage() {
     <div className="relative w-full min-h-[400px]">
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50 ">
-          <Rb_LoadingSpinner/>
+          <Rb_LoadingSpinner />
         </div>
       )}
 

@@ -25,10 +25,10 @@ function BooksDetailsPage() {
         };
 
         window.addEventListener("widget-loading-status", handleWidgetLoading);
-
-        loadWidget(PDP_WIDGET_URL, WIDGET_CONTAINER_ID, {
-            name: "Home_Widget",
-        });
+        const widgetParams = {
+            name: "Home_Widget"
+        };
+        loadWidget(PDP_WIDGET_URL, WIDGET_CONTAINER_ID, widgetParams);
         return () => {
             removeWidget(WIDGET_CONTAINER_ID);
             window.removeEventListener("widget-loading-status", handleWidgetLoading);

@@ -22,9 +22,10 @@ function BooksPage() {
       }
     };
     window.addEventListener("widget-loading-status", handleWidgetLoading);
-    loadWidget(CATEGORY_WIDGET, WIDGET_CONTAINER_ID, {
-      name: "Category-widget",
-    });
+    const widgetParams = {
+      name: "Category-widget"
+    };
+    loadWidget(CATEGORY_WIDGET, WIDGET_CONTAINER_ID, widgetParams);
     return () => {
       removeWidget(WIDGET_CONTAINER_ID);
       window.removeEventListener("widget-loading-status", handleWidgetLoading);
