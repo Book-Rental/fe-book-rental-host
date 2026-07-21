@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { loadWidget, removeWidget } from "../../utils/widgetLoader";
 
-import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
+// import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 
 const ORDER_WIDGET_URL = import.meta.env.VITE_ORDER_WIDGET;
 const WIDGET_CONTAINER_ID = "Order-widget";
@@ -40,7 +40,7 @@ function OrderPage({ view }: OrderPageProps) {
             removeWidget(WIDGET_CONTAINER_ID);
             // window.removeEventListener("widget-loading-status", handleWidgetLoading);
         };
-    }, []);
+    }, [view]);
 
     return (
         <div className="relative w-full min-h-[400px]">
