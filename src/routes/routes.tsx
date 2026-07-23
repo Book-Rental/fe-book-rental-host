@@ -40,10 +40,11 @@ export const AppRoutes = () => {
                         <Route element={<ProtectedRoute />}>
                             <Route path="/wishlist" element={<WishListPage />} />
                             <Route path="/cart" element={<CartPage />} />
+                            <Route path="/checkout" element={<CartPage view="checkout" />} />
                             <Route path="/profile" element={<ProfilePage />} />
                             <Route path="/orders" element={<OrderPage view="order-history" />} />
                             <Route path="/order-details" element={<OrderPage view="order-details" />} />
-                            {/* <Route path="/book-details" element={<OrderPage view="book-details" />} /> */}
+
                         </Route>
                     </Route>
                 </Routes>
