@@ -4,8 +4,10 @@ import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 
 const CART_WIDGET_URL = import.meta.env.VITE_CART_WIDGET;
 const WIDGET_CONTAINER_ID = "cart-widget";
-
-function CartPage() {
+interface CartPageProps {
+  view?: "cart" | "checkout";
+}
+function CartPage({ view = "cart" }: CartPageProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,14 +27,16 @@ function CartPage() {
 
     window.addEventListener("widget-loading-status", handleWidgetLoading);
     const widgetParams = {
-      name: WIDGET_CONTAINER_ID
+      name: WIDGET_CONTAINER_ID,
+      view: view
+
     };
     loadWidget(CART_WIDGET_URL, WIDGET_CONTAINER_ID, widgetParams);
     return () => {
       removeWidget(WIDGET_CONTAINER_ID);
       window.removeEventListener("widget-loading-status", handleWidgetLoading);
     };
-  }, []);
+  }, [view]);
 
   return (
     <div className="relative w-full min-h-[400px]">
