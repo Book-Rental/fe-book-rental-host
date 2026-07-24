@@ -40,6 +40,7 @@ store.subscribe(() => {
     const state = store.getState();
     window.HOST_USER_INFO = state.auth.userInfo;
     window.HOST_WISHLISTS = state.wishlist.wishlists;
+    window.HOST_CART=state.cart
 });
 
 export type RootState = ReturnType<typeof store.getState>;
