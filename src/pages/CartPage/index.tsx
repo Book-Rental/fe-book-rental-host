@@ -5,7 +5,7 @@ import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 const CART_WIDGET_URL = import.meta.env.VITE_CART_WIDGET;
 const WIDGET_CONTAINER_ID = "cart-widget";
 interface CartPageProps {
-  view?: "cart" | "checkout";
+  view?: "cart" | "checkout" | "success";
 }
 function CartPage({ view = "cart" }: CartPageProps) {
   const [isLoading, setIsLoading] = useState(true);
