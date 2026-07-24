@@ -4,9 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../../Component/Header";
 import Footer from "../../Component/Footer";
+
 import { useWishlist } from "../../hooks/useWishlist";
+import { useCart } from "../../hooks/useCart";
+
 import { setWishlists } from "../../store/services/Slices/wishlistSlice";
+import { setCartBookIds } from "../../store/services/Slices/cartSlice";
+
 import { RootState } from "../../store/store";
+
 import { Rb_BreadCrumb } from "@rentbook/rentbook-ui-lib";
 import { breadcrumbMap } from "../../config/breadcrumbConfig";
 import { getBreadcrumb } from "../../utils/breadcrumbHelper";
@@ -22,11 +28,19 @@ function MainModule() {
     (state: RootState) => state.auth.userInfo?._id
   );
 
+  // Wishlist
   const {
     data: lists = [],
-    isSuccess,
-    refetch,
+    isSuccess: wishlistSuccess,
+    refetch: refetchWishlist,
   } = useWishlist(userId ?? "");
+
+  // Cart
+  const {
+    data: cart,
+    isSuccess: cartSuccess,
+    refetch: refetchCart,
+  } = useCart();
 
   const breadcrumb = useMemo(() => {
     const dynamicBreadcrumb = getBreadcrumb(
@@ -63,8 +77,9 @@ function MainModule() {
     };
   }, []);
 
-useEffect(() => {
-    if (!isSuccess) return;
+  // Wishlist State
+  useEffect(() => {
+    if (!wishlistSuccess) return;
 
     const wishlistMap: Record<string, string[]> = {};
 
@@ -76,23 +91,39 @@ useEffect(() => {
 
     dispatch(setWishlists(wishlistMap));
 
-    // Update global object
     window.HOST_WISHLISTS = wishlistMap;
 
-    // Notify widgets
     window.dispatchEvent(
       new CustomEvent("wishlist-state-changed", {
         detail: wishlistMap,
       })
     );
-  }, [lists, isSuccess, dispatch]);
+  }, [lists, wishlistSuccess, dispatch]);
 
-  // Refetch when requested
+  // Cart State
+  useEffect(() => {
+    if (!cartSuccess || !cart) return;
+    console.log(cart)
+    const bookIds = cart.items.map((book) => book.bookId._id);
+    console.log('book iDs', bookIds)
+
+    // dispatch(setCartBookIds(bookIds));
+
+    // window.HOST_CART = bookIds;
+
+    window.dispatchEvent(
+      new CustomEvent("cart-state-changed", {
+        // detail: bookIds,
+      })
+    );
+  }, [cart, cartSuccess, dispatch]);
+
+  // Wishlist Refresh
   useEffect(() => {
     const handleWishlistRefresh = async () => {
       if (!userId) return;
 
-      await refetch();
+      await refetchWishlist();
     };
 
     window.addEventListener(
@@ -106,10 +137,29 @@ useEffect(() => {
         handleWishlistRefresh
       );
     };
-  }, [userId, refetch]);
+  }, [userId, refetchWishlist]);
+
+  // Cart Refresh
+  useEffect(() => {
+    const handleCartRefresh = async () => {
+      await refetchCart();
+    };
+
+    window.addEventListener(
+      "cart-refresh",
+      handleCartRefresh
+    );
+
+    return () => {
+      window.removeEventListener(
+        "cart-refresh",
+        handleCartRefresh
+      );
+    };
+  }, [refetchCart]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <Header />
 
       {widgetLoaded && breadcrumb.length > 0 && (

@@ -20,6 +20,13 @@ const fetchAllWishlists = async (
 ): Promise<Wishlist[]> => {
     const response = await fetch(
         `${backendUrl}/api/wishList/getAllWishList/${userId}`,
+        {
+            method: "GET",
+            credentials: "include", // Equivalent to withCredentials: true
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
     );
 
     if (!response.ok) {

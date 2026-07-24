@@ -3,11 +3,12 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from "redux-persist/lib/storage"; // Defaults to localStorage for web
 import authReducer from "./services/Slices/authSlice";
 import wishlistReducer from "./services/Slices/wishlistSlice";
-
+import cartReducer from './services/Slices/cartSlice'
 // 1. Combine your slices into a root reducer
 const rootReducer = combineReducers({
     auth: authReducer,
     wishlist: wishlistReducer,
+    cart: cartReducer,
 });
 
 // 2. Define your persistence configuration
