@@ -105,7 +105,7 @@ function MainModule() {
     if (!cartSuccess || !cart) return;
     console.log(cart)
     const bookIds = cart.items.map((book) => book.bookId._id);
-    console.log('book iDs', bookIds)
+   
 
     dispatch(setCartBookIds(bookIds));
 
