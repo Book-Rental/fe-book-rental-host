@@ -107,9 +107,9 @@ function MainModule() {
     const bookIds = cart.items.map((book) => book.bookId._id);
     console.log('book iDs', bookIds)
 
-    // dispatch(setCartBookIds(bookIds));
+    dispatch(setCartBookIds(bookIds));
 
-    // window.HOST_CART = bookIds;
+   
 
     window.dispatchEvent(
       new CustomEvent("cart-state-changed", {
