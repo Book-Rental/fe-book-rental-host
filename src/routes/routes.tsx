@@ -34,17 +34,15 @@ export const AppRoutes = () => {
                         <Route path="/books" element={<BooksPage />} />
                         <Route path="/test" element={<TestPage />} />
                         <Route path="/categories" element={<CategoriesPage />} />
-
                         <Route path="/books-details" element={<BooksDetailsPage />} />
+                        <Route path="/cart" element={<CartPage />} />
 
                         <Route element={<ProtectedRoute />}>
                             <Route path="/wishlist" element={<WishListPage />} />
-                            <Route path="/cart" element={<CartPage />} />
                             <Route path="/checkout" element={<CartPage view="checkout" />} />
                             <Route path="/profile" element={<ProfilePage />} />
                             <Route path="/orders" element={<OrderPage view="order-history" />} />
                             <Route path="/order-details" element={<OrderPage view="order-details" />} />
-
                         </Route>
                     </Route>
                 </Routes>
