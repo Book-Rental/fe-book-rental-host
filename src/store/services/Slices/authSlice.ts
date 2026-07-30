@@ -20,6 +20,7 @@ export interface UserInfo {
   email: string;
   userType: string;
   isVerified: boolean;
+  isSeller?: boolean;
   status: string;
   addresses: Address[];
 }
