@@ -71,6 +71,7 @@ export default function Header() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("book_rental_anonymous_id");
     dispatch(logout());
     setProfileOpen(false);
     navigate("/");
