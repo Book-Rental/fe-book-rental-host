@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function becomeSeller(userId: string, address: any) {
     const res = await fetch(`${BASE_URL}/api/user/${userId}`, {
         method: "PUT",

@@ -36,6 +36,7 @@ function SellerAddressPage() {
         useState(true);
 
     const [selectedAddress, setSelectedAddress] =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         useState<any>(null);
 
     useEffect(() => {
@@ -45,7 +46,7 @@ function SellerAddressPage() {
             );
             return;
         }
-
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleWidgetLoading = (event: any) => {
             if (event.detail !== undefined) {
                 setIsLoading(event.detail);
@@ -53,6 +54,7 @@ function SellerAddressPage() {
         };
 
         const handleAddressSelected = (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             event: any
         ) => {
             setSelectedAddress(event.detail);
@@ -101,7 +103,7 @@ function SellerAddressPage() {
 
             if (!userId) {
                 console.error("No user id found — cannot become seller.");
-                return; 
+                return;
             }
 
             const updatedUser = await becomeSeller(userId, selectedAddress);
