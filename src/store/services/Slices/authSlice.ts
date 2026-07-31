@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Address {
   _id?: string;
+  isSellerAddress: boolean;
   fullName?: string;
   phoneNumber?: string;
   addressLine1: string;
