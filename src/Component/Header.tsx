@@ -113,10 +113,6 @@ export default function Header() {
             </li>
 
             <li className="cursor-pointer transition-colors hover:text-[#146adb]">
-              Rent Books
-            </li>
-
-            <li className="cursor-pointer transition-colors hover:text-[#146adb]">
               Contact
             </li>
           </ul>
@@ -266,17 +262,14 @@ export default function Header() {
                       My Orders
                     </button>
                     <button
-                      onClick={() => {
-                        navigate("/my-books");
-                        setProfileOpen(false);
-                      }}
+                      onClick={() => navigate('/seller-dashboard')}
                       className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
                     >
                       <BookOpen
                         size={15}
                         className="text-gray-400 group-hover:text-blue-600 transition-colors"
                       />
-                      My Books
+                      Seller Dashboard
                     </button>
 
                     <button

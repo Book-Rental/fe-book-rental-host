@@ -51,6 +51,7 @@ const AuthPage = () => {
         isVerified,
         status,
         addresses,
+        isSeller,
       } = userInfo;
       dispatch(
         loginSuccess({
@@ -63,6 +64,7 @@ const AuthPage = () => {
             isVerified,
             status,
             addresses,
+            isSeller,
           },
         }),
       );
