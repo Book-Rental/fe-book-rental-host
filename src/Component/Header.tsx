@@ -12,21 +12,27 @@ import {
   HeartIcon,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store/services/Slices/authSlice";
-import { Rb_Button, Rb_Image, Rb_Input } from "@rentbook/rentbook-ui-lib";
+import {  useSelector } from "react-redux";
+
+import { Rb_Button, Rb_Icon, Rb_Image, Rb_Input } from "@rentbook/rentbook-ui-lib";
 import { GrOrderedList } from "react-icons/gr";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
+import { useLogout } from "../hooks/useLogout";
 
 export default function Header() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const { isAuthenticated, userInfo } = useSelector((state: any) => state.auth);
+  // const cart = useSelector((state: RootState) => state.cart)
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const location = useLocation();
   const profileRef = useRef<HTMLDivElement>(null);
+
+  const { logout } = useLogout();
 
   useEffect(() => {
     const close = () => setIsOpen(false);
@@ -71,10 +77,13 @@ export default function Header() {
   };
 
   const handleLogout = () => {
+<<<<<<< Updated upstream
     localStorage.removeItem("book_rental_anonymous_id");
     dispatch(logout());
+=======
+>>>>>>> Stashed changes
     setProfileOpen(false);
-    navigate("/");
+    logout();
   };
 
   return (
@@ -150,62 +159,56 @@ export default function Header() {
             />
           )}
         </div>
+        <div className="flex gap-6">
 
-        <div className="hidden lg:!flex items-center gap-4">
-          {!isAuthenticated ? (
-            <Rb_Button
-              onClick={() => navigate("/auth")}
-              className="hidden items-center gap-2 rounded-xl bg-[#146adb] px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-blue-600/10 transition-all duration-200 hover:bg-[#1057b8] hover:shadow-md active:scale-[0.98] sm:!flex"
-            >
-              <User size={16} className="stroke-[2.5]" />
-              Sign In
-            </Rb_Button>
-          ) : (
-            <div className="relative" ref={profileRef}>
-              {/* Refined Profile Action Trigger */}
-              <div
-                onClick={() => setProfileOpen(!profileOpen)}
-                className={`flex items-center gap-3 rounded-full border p-1 pr-4 transition-all duration-200 outline-none
-          ${profileOpen
-                    ? "border-blue-500 bg-blue-50/40 ring-2 ring-blue-500/10"
-                    : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/80 active:bg-gray-100"
-                  }`}
+          <button
+            onClick={() => navigate("/cart")}
+            className="group relative inline-flex items-center justify-center rounded-xl p-2.5 text-gray-700 transition-all duration-200 hover:text-[#146adb]  active:scale-95"
+            aria-label="View shopping cart"
+          >
+            <Rb_Icon icon={AiOutlineShoppingCart} className="h-6 w-6 transition-transform group-hover:scale-105" />
+
+            {/* Cart Count Badge - Only render if count > 0 */}
+            {/* <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-[11px] font-bold text-white shadow-sm ring-2 ring-white transition-transform group-hover:scale-110">
+              {cart.length}
+            </span> */}
+          </button>
+          <div className="hidden lg:!flex items-center gap-4">
+            {!isAuthenticated ? (
+              <Rb_Button
+                onClick={() => navigate("/auth")}
+                className="hidden items-center gap-2 rounded-xl bg-[#146adb] px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-blue-600/10 transition-all duration-200 hover:bg-[#1057b8] hover:shadow-md active:scale-[0.98] sm:!flex"
               >
-                {/* Modern Avatar Ring */}
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-sm font-bold text-white shadow-sm shadow-blue-500/10 ring-2 ring-white">
-                  {userInfo?.firstName?.charAt(0).toUpperCase() || "?"}
-                </div>
-
-                {/* Action Label Context Block */}
-                <div className="hidden text-left md:block max-w-[140px]">
-                  <p className="truncate text-xs font-semibold text-gray-900 leading-none mb-0.5">
-                    {userInfo?.firstName}
-                  </p>
-                  <p className="truncate text-[10px] font-medium text-gray-400 tracking-wide leading-none">
-                    {userInfo?.email}
-                  </p>
-                </div>
-
-                <ChevronDown
-                  size={14}
-                  className={`text-gray-400 transition-transform duration-300 ease-out shrink-0
-            ${profileOpen ? "rotate-180 text-blue-600" : ""}`}
-                />
-              </div>
-
-              {/* Modern High-End Dropdown Panel Box */}
-              {profileOpen && (
-                <div className="absolute right-0 mt-2.5 w-60 overflow-hidden rounded-xl border border-gray-100 bg-white/95 backdrop-blur-md p-1.5 shadow-xl shadow-gray-200/50 ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                  {/* Header Metadata Section Block */}
-                  <div className="rounded-lg bg-gray-50/80 p-3 mb-1 border border-gray-100/50">
-                    <p className="text-xs font-bold text-gray-800 leading-tight">
-                      {userInfo?.firstName}
-                    </p>
-                    <p className="truncate text-[11px] font-medium text-gray-400 mt-0.5">
-                      {userInfo?.email}
-                    </p>
+                <User size={16} className="stroke-[2.5]" />
+                Sign In
+              </Rb_Button>
+            ) : (
+              <div className="relative" ref={profileRef}>
+                {/* Refined Profile Action Trigger */}
+                <div
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  className={`flex items-center gap-3 rounded-full border p-1 pr-4 transition-all duration-200 outline-none
+          ${profileOpen
+                      ? "border-blue-500 bg-blue-50/40 ring-2 ring-blue-500/10"
+                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50/80 active:bg-gray-100"
+                    }`}
+                >
+                  {/* Modern Avatar Ring */}
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-sm font-bold text-white shadow-sm shadow-blue-500/10 ring-2 ring-white">
+                    {userInfo?.firstName?.charAt(0).toUpperCase() || "?"}
                   </div>
 
+                  {/* Action Label Context Block */}
+                  {/* <div className="hidden text-left md:block max-w-[140px]">
+                    <p className="truncate text-xs font-semibold text-gray-900 leading-none mb-0.5">
+                      {userInfo?.firstName}
+                    </p>
+                    <p className="truncate text-[10px] font-medium text-gray-400 tracking-wide leading-none">
+                      {userInfo?.email}
+                    </p>
+                  </div> */}
+
+<<<<<<< Updated upstream
                   {/* Grouped App Navigation Links Layout */}
                   <div className="flex flex-col gap-0.5">
                     <button
@@ -300,25 +303,148 @@ export default function Header() {
                       Logout
                     </button>
                   </div>
+=======
+                  <ChevronDown
+                    size={14}
+                    className={`text-gray-400 transition-transform duration-300 ease-out shrink-0
+            ${profileOpen ? "rotate-180 text-blue-600" : ""}`}
+                  />
+>>>>>>> Stashed changes
                 </div>
-              )}
-            </div>
-          )}
+
+                {/* Modern High-End Dropdown Panel Box */}
+                {profileOpen && (
+                  <div className="absolute right-0 mt-2.5 w-60 overflow-hidden rounded-xl border border-gray-100 bg-white/95 backdrop-blur-md p-1.5 shadow-xl shadow-gray-200/50 ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                    {/* Header Metadata Section Block */}
+                    <div className="rounded-lg bg-gray-50/80 p-3 mb-1 border border-gray-100/50">
+                      <p className="text-xs font-bold text-gray-800 leading-tight">
+                        {userInfo?.firstName}
+                      </p>
+                      <p className="truncate text-[11px] font-medium text-gray-400 mt-0.5">
+                        {userInfo?.email}
+                      </p>
+                    </div>
+
+                    {/* Grouped App Navigation Links Layout */}
+                    <div className="flex flex-col gap-0.5">
+                      <button
+                        onClick={() => {
+                          navigate("/profile");
+                          setProfileOpen(false);
+                        }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
+                      >
+                        <User
+                          size={15}
+                          className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                        />
+                        Profile
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          navigate("/cart");
+                          setProfileOpen(false);
+                        }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
+                      >
+                        <ShoppingCart
+                          size={15}
+                          className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                        />
+                        Cart
+                      </button>
+                      <button
+                        onClick={() => {
+                          navigate("/wishList");
+                          setProfileOpen(false);
+                        }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
+                      >
+                        <HeartIcon
+                          size={15}
+                          className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                        />
+                        WishList
+                      </button>
+                      <button
+                        onClick={() => {
+                          navigate("/orders");
+                          setProfileOpen(false);
+                        }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
+                      >
+                        <GrOrderedList
+                          size={15}
+                          className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                        />
+                        My Orders
+                      </button>
+                      <button
+                        onClick={() => {
+                          navigate("/my-books");
+                          setProfileOpen(false);
+                        }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
+                      >
+                        <BookOpen
+                          size={15}
+                          className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                        />
+                        My Books
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          navigate("/settings");
+                          setProfileOpen(false);
+                        }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900 group"
+                      >
+                        <Settings
+                          size={15}
+                          className="text-gray-400 group-hover:text-blue-600 transition-colors"
+                        />
+                        Settings
+                      </button>
+                    </div>
+
+                    {/* Separation Boundary Layer & Red Logout Trigger */}
+                    <div className="mt-1.5 pt-1.5 border-t border-gray-100">
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setProfileOpen(false);
+                        }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-bold text-red-600 transition-all hover:bg-red-50"
+                      >
+                        <LogOut size={15} className="stroke-[2.5]" />
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <button
+            className="rounded-lg p-1.5 text-gray-700 transition-colors hover:bg-gray-100 lg:hidden"
+            onClick={() => {
+              const next = !isOpen;
+              setIsOpen(next);
+              if (next) {
+                window.dispatchEvent(new Event("close-filter-drawer"));
+              }
+            }}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
         </div>
 
-        <button
-          className="rounded-lg p-1.5 text-gray-700 transition-colors hover:bg-gray-100 lg:hidden"
-          onClick={() => {
-            const next = !isOpen;
-            setIsOpen(next);
-            if (next) {
-              window.dispatchEvent(new Event("close-filter-drawer"));
-            }
-          }}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
+
+
       </div>
 
       {/* Mobile menu */}

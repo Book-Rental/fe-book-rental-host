@@ -105,15 +105,10 @@ function MainModule() {
     if (!cartSuccess || !cart) return;
     console.log(cart)
     const bookIds = cart.items.map((book) => book.bookId._id);
-   
-
     dispatch(setCartBookIds(bookIds));
-
-   
-
     window.dispatchEvent(
       new CustomEvent("cart-state-changed", {
-        // detail: bookIds,
+        detail: bookIds,
       })
     );
   }, [cart, cartSuccess, dispatch]);
