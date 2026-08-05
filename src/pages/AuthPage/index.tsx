@@ -33,6 +33,7 @@ const AuthPage = () => {
     // Define all parameters required by your widget here
     const widgetParams = {
       name: "Profile-widget",
+      app: "book",
       // view: "address", // Uncomment or add more parameters as needed
     };
 
