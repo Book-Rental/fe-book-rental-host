@@ -12,6 +12,7 @@ import { becomeSeller } from "../../../api/sellerApi";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../store/services/Slices/authSlice";
 import { RootState } from "../../store/store";
+import { useValidateAddress } from "../../hooks/useValidateAddress";
 
 const PROFILE_WIDGET =
     import.meta.env.VITE_PROFILE_WIDGET;
@@ -23,6 +24,7 @@ function SellerAddressPage() {
     const useInfo = useSelector((state: RootState) => state.auth.userInfo)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { mutate: validateAddress } = useValidateAddress();
 
     useEffect(() => {
         if (useInfo?.isSeller) {
@@ -58,6 +60,12 @@ function SellerAddressPage() {
             event: any
         ) => {
             setSelectedAddress(event.detail);
+            const selectedAddress = event.detail;
+            if (!selectedAddress.zipCode) {
+                console.error("Zip code is missing in the selected address.");
+            }
+            const pincode = selectedAddress.zipCode;
+            validateAddress(pincode);
         };
 
         window.addEventListener(
@@ -105,7 +113,6 @@ function SellerAddressPage() {
                 console.error("No user id found — cannot become seller.");
                 return;
             }
-
             const updatedUser = await becomeSeller(userId, selectedAddress);
 
 
