@@ -423,7 +423,16 @@ export default function Header() {
               >
                 My Orders
               </button>
-
+              <button
+                onClick={() => {
+                  navigate("/seller-dashboard");
+                  setIsOpen(false);
+                }}
+                className="flex w-full items-center gap-3 rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+              >
+                <BookOpen size={18} />
+                Seller Dashboard
+              </button>
               <button
                 onClick={() => navigate("/my-books")}
                 className="flex w-full items-center gap-3 rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
