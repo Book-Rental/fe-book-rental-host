@@ -8,6 +8,7 @@ import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 import SellerDashboardPage from "../pages/SellerDashboardPage";
 import SellerAddressPage from "../pages/SellerOnboarding/AddressPage";
 import BecomeSellerPage from "../pages/SellerOnboarding/BecomeSellerPage";
+import ShipmentTrackingPage from "../pages/ShipmentTrackingPage";
 
 
 
@@ -41,7 +42,8 @@ export const AppRoutes = () => {
                         <Route path="/categories" element={<CategoriesPage />} />
                         <Route path="/books-details" element={<BooksDetailsPage />} />
                         <Route path="/cart" element={<CartPage />} />
-
+                        <Route path="/track-shipment" element={<ShipmentTrackingPage />} />
+                        <Route path="/track-shipment/:awbNumber" element={<ShipmentTrackingPage />} />
                         <Route element={<ProtectedRoute />}>
                             <Route path="/wishlist" element={<WishListPage />} />
                             <Route path="/checkout" element={<CartPage view="checkout" />} />
