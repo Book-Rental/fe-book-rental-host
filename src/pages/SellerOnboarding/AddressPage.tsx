@@ -83,6 +83,8 @@ function SellerAddressPage() {
             const address = customEvent.detail;
 
             if (!address?.zipCode) {
+                setSelectedAddress(null);
+
                 showToast(
                     "Selected address does not contain a valid ZIP code.",
                     "error"
