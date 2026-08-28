@@ -14,7 +14,7 @@ function Footer() {
   return (
     <footer className="mt-20 bg-gray-900 text-gray-300">
       <div className="mx-auto max-w-[95%] px-6 py-10">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:!grid-cols-4">
           {/* Brand */}
           <div>
             <div className="mb-4 flex items-center gap-3">
