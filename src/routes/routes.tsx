@@ -9,6 +9,7 @@ import SellerDashboardPage from "../pages/SellerDashboardPage";
 import SellerAddressPage from "../pages/SellerOnboarding/AddressPage";
 import BecomeSellerPage from "../pages/SellerOnboarding/BecomeSellerPage";
 import ShipmentTrackingPage from "../pages/ShipmentTrackingPage";
+import AuctionPage from "../pages/Auction";
 
 
 
@@ -54,6 +55,9 @@ export const AppRoutes = () => {
                             <Route path="/seller-onboarding" element={<BecomeSellerPage />} />
                             <Route path="/seller-onboarding/address" element={<SellerAddressPage />} />
                             <Route path="/seller-dashboard" element={<SellerDashboardPage />} />
+                            <Route path="/auction" element={<AuctionPage view="auction"/>} />
+                            <Route path="/bidding" element={<AuctionPage view="bidding"/>} />
+                            <Route path="/bid-success" element={<AuctionPage view="bid-success"/>} />
                         </Route>
                     </Route>
                 </Routes>
