@@ -108,6 +108,12 @@ export default function Header() {
               Books
             </li>
 
+<button
+            onClick={() => navigate("/auction")}
+            className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+          >
+            Auction Books
+          </button>
             <li className="cursor-pointer transition-colors hover:text-[#146adb]" onClick={() => navigate('/Categories')}>
               Categories
             </li>
@@ -364,6 +370,13 @@ export default function Header() {
             className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
           >
             Books
+          </button>
+
+          <button
+            onClick={() => navigate("/auction")}
+            className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+          >
+            Auction Books
           </button>
 
           <button className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50" onClick={() => navigate('/Categories')}>
