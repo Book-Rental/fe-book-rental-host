@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import { loadWidget, removeWidget } from "../../utils/widgetLoader";
-
-import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
-
 const AUCTION_WIDGET_URL = import.meta.env.VITE_AUCTION_WIDGET;
 const WIDGET_CONTAINER_ID = "auction-widget";
 
@@ -12,7 +9,7 @@ interface AuctionPageProps {
 
 function AuctionPage({ view }: AuctionPageProps) {
     const [isLoading, setIsLoading] = useState(true);
-
+console.log(isLoading)
     useEffect(() => {
         if (!AUCTION_WIDGET_URL) {
             console.error(
