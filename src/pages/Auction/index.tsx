@@ -4,7 +4,7 @@ const AUCTION_WIDGET_URL = import.meta.env.VITE_AUCTION_WIDGET;
 const WIDGET_CONTAINER_ID = "auction-widget";
 
 interface AuctionPageProps {
-  view: "auction" | "bidding" | "bid-success";
+  view: "auction" | "bidding" | "bid-success" | 'my-bids'| "bids-details";
 }
 
 function AuctionPage({ view }: AuctionPageProps) {

@@ -92,5 +92,64 @@ export const breadcrumbMap: Record<string, BreadcrumbItem[]> = {
       label: "Order Details",
     },
   ],
+"/bidding": [
+    {
+      label: "Home",
+      path: "/",
+    },
+    {
+      label: "Auction",
+      path: "/auction",
+    },
+    {
+      label: "Place-a-bid",
+    },
+  ],
 
+   "/bid-success": [
+    {
+      label: "Home",
+      path: "/",
+    },
+    {
+      label: "Auction",
+      path: "/auction",
+    },
+    {
+      label: "Bid-success",
+    },
+  ],
+
+  
+   "/my-bids": [
+    {
+      label: "Home",
+      path: "/",
+    },
+    {
+      label: "Auction",
+      path: "/auction",
+    },
+    {
+      label: "My Bids",
+    },
+  ],
+
+  "/bid-details": [
+    {
+      label: "Home",
+      path: "/",
+    },
+    {
+      label: "Auction",
+      path: "/auction",
+    },
+    {
+      label: "My Bids",
+      path: "/my-bids",
+    },
+    {
+      label: "Bid Details",
+    }
+  ],
 };

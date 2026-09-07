@@ -96,33 +96,79 @@ export default function Header() {
         </div>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:!block">
-          <ul className="flex items-center gap-8 text-sm font-medium text-gray-700">
-            <li
-              onClick={() => {
-                window.history.pushState({}, "", "/books");
-                window.dispatchEvent(new PopStateEvent("popstate"));
-              }}
-              className="cursor-pointer transition-colors hover:text-[#146adb]"
-            >
-              Books
-            </li>
+<nav className="hidden lg:!block">
+  <ul className="flex items-center gap-8 text-sm font-medium text-gray-700">
 
-<button
-            onClick={() => navigate("/auction")}
-            className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-          >
-            Auction Books
-          </button>
-            <li className="cursor-pointer transition-colors hover:text-[#146adb]" onClick={() => navigate('/Categories')}>
-              Categories
-            </li>
+    {/* Books */}
+    <li
+      onClick={() => {
+        window.history.pushState({}, "", "/books");
+        window.dispatchEvent(new PopStateEvent("popstate"));
+      }}
+      className="cursor-pointer transition-colors hover:text-[#146adb]"
+    >
+      Books
+    </li>
 
-            <li className="cursor-pointer transition-colors hover:text-[#146adb]">
-              Contact
-            </li>
-          </ul>
-        </nav>
+    {/* Auction Books Dropdown */}
+    <li className="relative group">
+      <button
+        onClick={() => navigate("/auction")}
+        className="flex items-center gap-1 cursor-pointer transition-colors hover:text-[#146adb]"
+      >
+        Auction Books
+
+        {/* Arrow */}
+        <svg
+          className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
+      {/* Dropdown */}
+      <div className="invisible absolute left-0 top-full z-50 mt-2 w-48 translate-y-2 rounded-lg border border-gray-100 bg-white py-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+
+        <button
+          onClick={() => navigate("/auction")}
+          className="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#146adb]"
+        >
+          Auction Books
+        </button>
+
+        <button
+          onClick={() => navigate("/my-bids")}
+          className="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#146adb]"
+        >
+          My Bids
+        </button>
+
+      </div>
+    </li>
+
+    {/* Categories */}
+    <li
+      className="cursor-pointer transition-colors hover:text-[#146adb]"
+      onClick={() => navigate("/Categories")}
+    >
+      Categories
+    </li>
+
+    {/* Contact */}
+    <li className="cursor-pointer transition-colors hover:text-[#146adb]">
+      Contact
+    </li>
+
+  </ul>
+</nav>
 
         {/* Desktop search */}
 

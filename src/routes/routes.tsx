@@ -58,6 +58,8 @@ export const AppRoutes = () => {
                             <Route path="/auction" element={<AuctionPage view="auction"/>} />
                             <Route path="/bidding" element={<AuctionPage view="bidding"/>} />
                             <Route path="/bid-success" element={<AuctionPage view="bid-success"/>} />
+                            <Route path="/my-bids" element={<AuctionPage view="my-bids"/>} />
+                            <Route path="/bid-details/:auctionId" element={<AuctionPage view="bids-details"/>} />
                         </Route>
                     </Route>
                 </Routes>
