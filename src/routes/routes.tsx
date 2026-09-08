@@ -9,7 +9,6 @@ import SellerDashboardPage from "../pages/SellerDashboardPage";
 import SellerAddressPage from "../pages/SellerOnboarding/AddressPage";
 import BecomeSellerPage from "../pages/SellerOnboarding/BecomeSellerPage";
 import ShipmentTrackingPage from "../pages/ShipmentTrackingPage";
-import AuctionPage from "../pages/Auction";
 
 
 
@@ -42,24 +41,19 @@ export const AppRoutes = () => {
                         <Route path="/test" element={<TestPage />} />
                         <Route path="/categories" element={<CategoriesPage />} />
                         <Route path="/books-details" element={<BooksDetailsPage />} />
-                        <Route path="/cart" element={<CartPage />} />
+                        <Route path="/cart" element={<CartPage WIDGET_CONTAINER_ID="cart-widget" />} />
                         <Route path="/track-shipment" element={<ShipmentTrackingPage />} />
                         <Route path="/track-shipment/:awbNumber" element={<ShipmentTrackingPage />} />
                         <Route element={<ProtectedRoute />}>
                             <Route path="/wishlist" element={<WishListPage />} />
-                            <Route path="/checkout" element={<CartPage view="checkout" />} />
+                            <Route path="/checkout" element={<CartPage view="checkout" WIDGET_CONTAINER_ID="checkout-widget" />} />
                             <Route path="/profile" element={<ProfilePage />} />
                             <Route path="/orders" element={<OrderPage view="order-history" />} />
                             <Route path="/order-details" element={<OrderPage view="order-details" />} />
-                            <Route path="/OrderConform" element={<CartPage view='success' />} />
+                            <Route path="/OrderConform" element={<CartPage view='success' WIDGET_CONTAINER_ID="success-widget" />} />
                             <Route path="/seller-onboarding" element={<BecomeSellerPage />} />
                             <Route path="/seller-onboarding/address" element={<SellerAddressPage />} />
                             <Route path="/seller-dashboard" element={<SellerDashboardPage />} />
-                            <Route path="/auction" element={<AuctionPage view="auction"/>} />
-                            <Route path="/bidding" element={<AuctionPage view="bidding"/>} />
-                            <Route path="/bid-success" element={<AuctionPage view="bid-success"/>} />
-                            <Route path="/my-bids" element={<AuctionPage view="my-bids"/>} />
-                            <Route path="/bid-details/:auctionId" element={<AuctionPage view="bids-details"/>} />
                         </Route>
                     </Route>
                 </Routes>
