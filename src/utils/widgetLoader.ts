@@ -1,5 +1,3 @@
-
-
 export const loadWidget = (
   url: string,
   containerId: string,
@@ -20,8 +18,12 @@ export const loadWidget = (
     });
   }
 
+  // 1. Add a cache-buster timestamp to ensure a fresh fetch from the backend every time
+  const separator = url.includes("?") ? "&" : "?";
+  const freshUrl = `${url}${separator}t=${Date.now()}`;
+
   const script = document.createElement("script");
-  script.src = url;
+  script.src = freshUrl; // Use the fresh URL with the timestamp
   script.async = true;
 
   script.onload = () => {
