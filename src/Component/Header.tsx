@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/services/Slices/authSlice";
 import { Rb_Button, Rb_Image, Rb_Input } from "@rentbook/rentbook-ui-lib";
 import { GrOrderedList } from "react-icons/gr";
+import axios from "axios";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function Header() {
   const [profileOpen, setProfileOpen] = useState(false);
   const location = useLocation();
   const profileRef = useRef<HTMLDivElement>(null);
-
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     const close = () => setIsOpen(false);
     window.addEventListener("close-header-menu", close);
@@ -70,11 +71,21 @@ export default function Header() {
     window.dispatchEvent(new PopStateEvent("popstate"));
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("book_rental_anonymous_id");
-    dispatch(logout());
-    setProfileOpen(false);
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      // 1. Hit the backend logout endpoint to clear the HTTP-only cookie
+      await axios.get(`${BASE_URL}/api/auth/logout`, {
+        withCredentials: true, // Crucial for clearing cookies across localhost & deployed backend
+      });
+    } catch (error) {
+      console.error("Backend logout failed:", error);
+    } finally {
+      // 2. Clean up local state (runs even if the network request fails)
+      localStorage.removeItem("book_rental_anonymous_id");
+      dispatch(logout());
+      setProfileOpen(false);
+      navigate("/");
+    }
   };
 
   return (
@@ -96,79 +107,79 @@ export default function Header() {
         </div>
 
         {/* Desktop nav */}
-<nav className="hidden lg:!block">
-  <ul className="flex items-center gap-8 text-sm font-medium text-gray-700">
+        <nav className="hidden lg:!block">
+          <ul className="flex items-center gap-8 text-sm font-medium text-gray-700">
 
-    {/* Books */}
-    <li
-      onClick={() => {
-        window.history.pushState({}, "", "/books");
-        window.dispatchEvent(new PopStateEvent("popstate"));
-      }}
-      className="cursor-pointer transition-colors hover:text-[#146adb]"
-    >
-      Books
-    </li>
+            {/* Books */}
+            <li
+              onClick={() => {
+                window.history.pushState({}, "", "/books");
+                window.dispatchEvent(new PopStateEvent("popstate"));
+              }}
+              className="cursor-pointer transition-colors hover:text-[#146adb]"
+            >
+              Books
+            </li>
 
-    {/* Auction Books Dropdown */}
-    <li className="relative group">
-      <button
-        onClick={() => navigate("/auction")}
-        className="flex items-center gap-1 cursor-pointer transition-colors hover:text-[#146adb]"
-      >
-        Auction Books
+            {/* Auction Books Dropdown */}
+            <li className="relative group">
+              <button
+                onClick={() => navigate("/auction")}
+                className="flex items-center gap-1 cursor-pointer transition-colors hover:text-[#146adb]"
+              >
+                Auction Books
 
-        {/* Arrow */}
-        <svg
-          className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
+                {/* Arrow */}
+                <svg
+                  className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
 
-      {/* Dropdown */}
-      <div className="invisible absolute left-0 top-full z-50 mt-2 w-48 translate-y-2 rounded-lg border border-gray-100 bg-white py-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+              {/* Dropdown */}
+              <div className="invisible absolute left-0 top-full z-50 mt-2 w-48 translate-y-2 rounded-lg border border-gray-100 bg-white py-2 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
 
-        <button
-          onClick={() => navigate("/auction")}
-          className="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#146adb]"
-        >
-          Auction Books
-        </button>
+                <button
+                  onClick={() => navigate("/auction")}
+                  className="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#146adb]"
+                >
+                  Auction Books
+                </button>
 
-        <button
-          onClick={() => navigate("/my-bids")}
-          className="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#146adb]"
-        >
-          My Bids
-        </button>
+                <button
+                  onClick={() => navigate("/my-bids")}
+                  className="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#146adb]"
+                >
+                  My Bids
+                </button>
 
-      </div>
-    </li>
+              </div>
+            </li>
 
-    {/* Categories */}
-    <li
-      className="cursor-pointer transition-colors hover:text-[#146adb]"
-      onClick={() => navigate("/Categories")}
-    >
-      Categories
-    </li>
+            {/* Categories */}
+            <li
+              className="cursor-pointer transition-colors hover:text-[#146adb]"
+              onClick={() => navigate("/Categories")}
+            >
+              Categories
+            </li>
 
-    {/* Contact */}
-    <li className="cursor-pointer transition-colors hover:text-[#146adb]">
-      Contact
-    </li>
+            {/* Contact */}
+            <li className="cursor-pointer transition-colors hover:text-[#146adb]">
+              Contact
+            </li>
 
-  </ul>
-</nav>
+          </ul>
+        </nav>
 
         {/* Desktop search */}
 
