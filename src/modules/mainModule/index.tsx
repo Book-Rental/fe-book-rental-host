@@ -16,6 +16,7 @@ import { RootState } from "../../store/store";
 import { Rb_BreadCrumb } from "@rentbook/rentbook-ui-lib";
 import { breadcrumbMap } from "../../config/breadcrumbConfig";
 import { getBreadcrumb } from "../../utils/breadcrumbHelper";
+import AIAgent from "../../Component/AIAgent";
 
 function MainModule() {
   const dispatch = useDispatch();
@@ -176,6 +177,7 @@ function MainModule() {
       </main>
 
       <Footer />
+        <AIAgent />
     </div>
   );
 }
