@@ -4,6 +4,7 @@ export interface AgentResponse {
   success: boolean;
   data?: {
     reply?: string;
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
   message?: string;
@@ -45,7 +46,7 @@ export const sendMessageToAgent = async (
     if (!response.ok) {
       throw new Error(
         data?.message ||
-          "Failed to communicate with AI Agent"
+        "Failed to communicate with AI Agent"
       );
     }
 
