@@ -69,7 +69,11 @@ const AuthPage = () => {
           },
         }),
       );
-      navigate("/");
+      if (userType === "superadmin") {
+        navigate("/site-profit", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     };
 
     window.addEventListener("login-widget-success", handleLoginSuccess);

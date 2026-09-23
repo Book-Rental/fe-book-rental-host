@@ -10,6 +10,7 @@ import {
   LogOut,
   ChevronDown,
   HeartIcon,
+  BarChart3,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +24,7 @@ export default function Header() {
   const dispatch = useDispatch();
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const { isAuthenticated, userInfo } = useSelector((state: any) => state.auth);
+  console.log("HEADER USER:", userInfo);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -178,6 +180,19 @@ export default function Header() {
               Contact
             </li>
 
+            {/* Site Profit - Super Admin only */}
+            {userInfo?.userType === "superadmin" && (
+              <li
+                onClick={() => navigate("/site-profit")}
+                className={`flex cursor-pointer items-center gap-1 transition-colors ${location.pathname === "/site-profit"
+                  ? "font-semibold text-[#146adb]"
+                  : "text-gray-700 hover:text-[#146adb]"
+                  }`}
+              >
+                <BarChart3 size={16} />
+                Site Profit
+              </li>
+            )}
           </ul>
         </nav>
 
@@ -439,6 +454,23 @@ export default function Header() {
           <button className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50" onClick={() => navigate('/Categories')}>
             Categories
           </button>
+
+          {userInfo?.userType === "superadmin" && (
+            <button
+              onClick={() => {
+                navigate("/site-profit");
+                setIsOpen(false);
+              }}
+              className={`flex w-full items-center gap-2 rounded-lg p-2 text-left text-sm font-medium transition-colors ${location.pathname === "/site-profit"
+                  ? "bg-blue-50 text-[#146adb]"
+                  : "text-gray-700 hover:bg-gray-50"
+                }`}
+            >
+              <BarChart3 size={18} />
+              Site Profit
+            </button>
+          )}
+
 
           <button className="block w-full rounded-lg p-2 text-left text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50">
             Rent Books
